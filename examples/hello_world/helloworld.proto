@@ -1,0 +1,51 @@
+// Copyright 2015 gRPC authors.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+// The lines that start with option in the Protocol Buffers (protobuf) file
+// provide various options and configuration settings for the code generation process.
+// These options specify how the generated code will be structured
+// and named in different target programming languages.
+option java_multiple_files = true;
+option java_package = "io.grpc.examples.helloworld";
+option java_outer_classname = "HelloWorldProto";
+option objc_class_prefix = "HLW";
+
+
+// The .proto file starts with a package declaration,
+// which helps to prevent naming conflicts between different projects.
+// In Python, packages are normally determined by directory structure,
+// so the package you define in your .proto file will have no effect on the generated code.
+// However, you should still declare one to avoid name collisions
+// in the Protocol Buffers name space as well as in non-Python languages.
+package helloworld;
+
+// The greeting service definition.
+service Greeter {
+  // Sends a greeting
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+
+  rpc SayHelloStreamReply (HelloRequest) returns (stream HelloReply) {}
+}
+
+// The request message containing the user's name.
+message HelloRequest {
+  string name = 1;
+}
+
+// The response message containing the greetings
+message HelloReply {
+  string message = 1;
+}

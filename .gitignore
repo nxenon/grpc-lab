@@ -1,0 +1,4 @@
+venv*
+.idea
+notes.txt
+test.py
