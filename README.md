@@ -22,5 +22,8 @@ Read [Protoc Readme](./protoc.md)
 # Setup gRPC-Web
 Read [gRPC-Web Readme](./grpc-web.md)
 
+# Test with .proto file
+If you have `.proto` file read [grpcui README](./grpcui.md)
+
 # Reference
 All Examples are examples in main [gRPC-Web Github repo]("https://github.com/grpc/grpc-web") with some specific changes. 
