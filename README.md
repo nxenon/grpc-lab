@@ -13,10 +13,11 @@ See the [gRPC-Pentest-Suite]("https://github.com/nxenon/grpc-pentest-suite") Rep
 the examples directory in this repo, has these examples:
 - [Echo](./examples/echo): simple echo app with grpc-web
 - [Hello World](./examples/hello_world): simple hello world grpc app
-- [Vulnerable XSS Echo](./examples/vuln-xss-echo-client-protect): app using grpc-web which is vulnerable to xss but it has some client protections
+- [Vulnerable XSS Echo](./examples/vuln-xss-echo-client-protect): app using grpc-web which is vulnerable to xss ,but it has client protections
+- [Vulnerable XSS Multi Parameter Echo](./examples/vuln-xss-echo-client-protect-multiple-params): app using grpc-web which is vulnerable to xss ,but it has client protections and uses multiple parameters instead of one
 - [XSS Secured](./examples/xss-secure): XSS Secured --> the input gets encoded in server
 
-# ptorobuf compiler (protoc) 
+# Protobuf Compiler (protoc) 
 Read [Protoc Readme](./protoc.md)
 
 # Setup gRPC-Web
