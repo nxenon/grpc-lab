@@ -1,0 +1,52 @@
+<!-- Copyright 2018 Google LLC  -->
+
+<!-- Licensed under the Apache License, Version 2.0 (the "License");  -->
+<!-- you may not use this file except in compliance with the License.  -->
+<!-- You may obtain a copy of the License at  -->
+
+<!--     https://www.apache.org/licenses/LICENSE-2.0  -->
+
+<!-- Unless required by applicable law or agreed to in writing, software  -->
+<!-- distributed under the License is distributed on an "AS IS" BASIS,  -->
+<!-- WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  -->
+<!-- See the License for the specific language governing permissions and  -->
+<!-- limitations under the License.  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Echo Example</title>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+  // Load the local /dist/main.js and use a random query parameter to disable caching.
+  const script = document.createElement('script');
+  script.src = `./dist/main.js?v=${Date.now()}`;
+  document.head.appendChild(script);
+</script>
+</head>
+<body>
+  <div class="container" style="margin-top:50px">
+    <div class="row" id="first">
+      <div class="form-group">
+        <div class="input-group">
+          <input type="text" class="form-control" id="msg" placeholder="msg">
+          <input type="text" class="form-control" id="name" placeholder="name">
+          <input type="text" class="form-control" id="age" placeholder="age">
+          <input type="text" class="form-control" id="is_admin" placeholder="is_admin">
+          <input type="text" class="form-control" id="weight" placeholder="weight">
+          <input type="text" class="form-control" id="test2" placeholder="test2">
+          <input type="text" class="form-control" id="test3" placeholder="test3">
+          <input type="text" class="form-control" id="test4" placeholder="test4">
+          <span class="input-group-btn">
+            <button class="btn btn-primary" type="button" id="send">Send
+            </button>
+          </span>
+          <p id="result_text">Request Sent Count: 0</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

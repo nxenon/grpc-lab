@@ -1,5 +1,5 @@
 # Setup
-This example is vulnerable to xss ,but it has client protection.
+This example is vulnerable to xss ,but it has client protection. In this example there is multiple parameters.
 
 ## Generate Stub Files
 
@@ -7,11 +7,11 @@ stub files are ready but if you want to make change on .proto file you can recom
 
 To generate the protobuf message classes from our .proto file, run the following command:
 
-    protoc -I=./ echo.proto --js_out=import_style=commonjs:./
+    protoc -I=./ echo3.proto --js_out=import_style=commonjs:./
 
 To generate the service client stub file, run this command:
 
-    protoc -I=./ echo.proto --grpc-web_out=import_style=commonjs,mode=grpcwebtext:./
+    protoc -I=./ echo3.proto --grpc-web_out=import_style=commonjs,mode=grpcwebtext:./
 
 then you can make your desired changes to stub files: `NAME_pb2` and `NAME_pb2_grpc` files
 
