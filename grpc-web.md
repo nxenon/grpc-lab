@@ -9,8 +9,9 @@ https://grpc.io/docs/platforms/web/quickstart/
 [Protoc Readme](protoc.md)
 
 ### NPM
-npm install -g protoc-gen-js
-npm install -g webpack-cli
+
+    npm install -g protoc-gen-js
+    npm install -g webpack-cli
 
 ### Steps
 
