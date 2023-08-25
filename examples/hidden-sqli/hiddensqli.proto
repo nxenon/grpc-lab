@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "xenon.hidden.sqli";
+option java_outer_classname = "HiddenSqliProto";
+option objc_class_prefix = "HLW";
+
+package hidden.sqli;
+
+// The Searcher service definition.
+service Searcher {
+  // Sends a Search Query
+  rpc Search (SearchRequest) returns (SearchResponse) {}
+}
+
+// The Searcher service definition.
+service HiddenSearcher {
+  // Sends a Search Query
+  rpc Search2 (SearchHiddenRequest) returns (SearchResponse) {}
+}
+
+// search request message and containing a hidden param
+message SearchRequest {
+  string search_word = 1;
+  string hidden_param = 2;
+}
+
+message SearchHiddenRequest{
+  string search_hidden_word = 1;
+}
+
+// The response message containing the result of the search
+message SearchResponse {
+  string result = 1;
+}
