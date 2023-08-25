@@ -24,6 +24,10 @@ To generate the service client stub file, run this command:
 
     protoc -I=./ echo.proto --grpc-web_out=import_style=commonjs,mode=grpcwebtext:./
 
+If there is error of protoc-gen-grpc-web: program not found:
+
+    sudo npm install -g protoc-gen-grpc-web
+
 In the --grpc-web_out param above:
 
 mode can be `grpcwebtext`` (default) --> unary & Server-side Streaming
