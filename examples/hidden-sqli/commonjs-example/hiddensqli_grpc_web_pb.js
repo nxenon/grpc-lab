@@ -34,7 +34,7 @@ proto.hidden.sqli = require('./hiddensqli_pb.js');
 proto.hidden.sqli.SearcherClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
-  options.format = 'binary';
+  options.format = 'text';
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client
@@ -60,7 +60,7 @@ proto.hidden.sqli.SearcherClient =
 proto.hidden.sqli.SearcherPromiseClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
-  options.format = 'binary';
+  options.format = 'text';
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client
@@ -147,7 +147,7 @@ proto.hidden.sqli.SearcherPromiseClient.prototype.search =
 proto.hidden.sqli.HiddenSearcherClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
-  options.format = 'binary';
+  options.format = 'text';
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client
@@ -173,7 +173,7 @@ proto.hidden.sqli.HiddenSearcherClient =
 proto.hidden.sqli.HiddenSearcherPromiseClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
-  options.format = 'binary';
+  options.format = 'text';
 
   /**
    * @private @const {!grpc.web.GrpcWebClientBase} The client

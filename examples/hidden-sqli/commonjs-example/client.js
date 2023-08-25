@@ -1,25 +1,18 @@
-const {EchoRequest,
-       ServerStreamingEchoRequest} = require('./echo_pb.js');
-const {EchoServiceClient} = require('./echo_grpc_web_pb.js');
-const {EchoApp} = require('../echoapp.js');
+const {SearchRequest} = require('./hiddensqli_pb');
+const {SearcherClient} = require('./hiddensqli_grpc_web_pb');
+const {SearcherApp} = require('./seacherapp');
 const grpc = {};
 grpc.web = require('grpc-web');
 
-/** Sample interceptor implementation */
-const StreamResponseInterceptor = function() {};
 
-
-var opts = {'streamInterceptors' : [new StreamResponseInterceptor()]};
-var echoService = new EchoServiceClient('http://'+window.location.hostname+':8080', null,
+var searcherService = new SearcherClient('http://'+window.location.hostname+':8080', null,
                                         null);
-//                                      opts);
 
-var echoApp = new EchoApp(
-  echoService,
+var searcherApp = new SearcherApp(
+  searcherService,
   {
-    EchoRequest: EchoRequest,
-    ServerStreamingEchoRequest: ServerStreamingEchoRequest
+    SearchRequest: SearchRequest
   }
 );
 
-echoApp.load();
+searcherApp.load();

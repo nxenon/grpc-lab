@@ -1,177 +1,70 @@
-/**
- *
- * Copyright 2018 Google LLC
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- */
+const searcherapp = {};
 
-const echoapp = {};
-
-/**
- * @param {Object} echoService
- * @param {Object} ctors
- */
-echoapp.EchoApp = function(echoService, ctors) {
-  this.echoService = echoService;
+searcherapp.SearcherApp = function (searcherService, ctors){
+  this.searcherService = searcherService;
   this.ctors = ctors;
-};
+}
 
-echoapp.EchoApp.INTERVAL = 500; // ms
-echoapp.EchoApp.MAX_STREAM_MESSAGES = 50;
+searcherapp.SearcherApp.INTERVAL = 500; // ms
+searcherapp.SearcherApp.MAX_STREAM_MESSAGES = 50;
 
-/**
- * @param {string} message
- * @param {string} cssClass
- */
-echoapp.EchoApp.addMessage = function(message, cssClass) {
-  $("#first").after(
-    $("<div/>").addClass("row").append(
-      $("<h2/>").append(
-        $("<span/>").addClass("label " + cssClass).text(message))));
-};
+searcherapp.SearcherApp.addResult = function (result){
+  // result is stringified of json result
 
-/**
- * @param {string} message
- */
-echoapp.EchoApp.addLeftMessage = function(message) {
-  this.addMessage(message, "label-primary pull-left");
-};
+    if (result.length > 0){
+      json_result = JSON.parse(result)
+      for (var i = 0; i < json_result.length; i++) {
+        var item = json_result[i];
 
-/**
- * @param {string} message
- */
-echoapp.EchoApp.addRightMessage = function(message) {
-  this.addMessage(message, "label-default pull-right");
-};
+        $("#results-div").append(
+            "<div>" + "<p>--------------------------</p>" + "<p>id:" + item.id + "</p>"  + "<p>Title:" + item.title + "</p>"  + "<p>Body:" + item.body + "</p>" + "</div>" + "<p>--------------------------</p>"
+        )
+      }
+    }
 
-/**
- * @param {string} msg
- */
-echoapp.EchoApp.prototype.echo = function(msg) {
-  echoapp.EchoApp.addLeftMessage(msg);
-  var unaryRequest = new this.ctors.EchoRequest();
-  unaryRequest.setMessage(msg);
-  var call = this.echoService.echo(unaryRequest,
-                                   {"custom-header-1": "value1"},
-                                   function(err, response) {
-    if (err) {
-      echoapp.EchoApp.addRightMessage('Error code: '+err.code+' "'+
-                                      err.message+'"');
+}
+
+searcherapp.SearcherApp.addError = function (msg){
+  // add error in front-end
+  alert("Error Occurred: " + msg)
+}
+
+searcherapp.SearcherApp.prototype.search = function (word){
+
+  var unaryRequest = new this.ctors.SearchRequest();
+  unaryRequest.setSearchWord(word);
+  x = Object.getOwnPropertyNames(this)
+  console.log(x)
+  var call = this.searcherService.search(unaryRequest,{},function (err, response){
+    if (err){
+      searcherapp.SearcherApp.addError('Error Code: ' + err.code + ' --msg-> ' + err.message);
     } else {
-      setTimeout(function () {
-        echoapp.EchoApp.addRightMessage(response.getMessage());
-      }, echoapp.EchoApp.INTERVAL);
+      setTimeout(function (){
+        searcherapp.SearcherApp.addResult(response.getResult())
+      }, searcherapp.SearcherApp.INTERVAL);
     }
   });
   call.on('status', function(status) {
-    if (status.metadata) {
-      console.log("Received metadata");
-      console.log(status.metadata);
-    }
-  });
-};
-
-/**
- * @param {string} msg
- */
-echoapp.EchoApp.prototype.echoError = function(msg) {
-  echoapp.EchoApp.addLeftMessage(`Error: ${msg}`);
-  var unaryRequest = new this.ctors.EchoRequest();
-  unaryRequest.setMessage(msg);
-  this.echoService.echoAbort(unaryRequest, {}, function(err, response) {
-    if (err) {
-      echoapp.EchoApp.addRightMessage('Error code: '+err.code+' "'+
-                                      err.message+'"');
-    }
-  });
-};
-
-/**
- * @param {string} msg
- * @param {number} count
- */
-echoapp.EchoApp.prototype.repeatEcho = function(msg, count) {
-  echoapp.EchoApp.addLeftMessage(msg);
-  if (count > echoapp.EchoApp.MAX_STREAM_MESSAGES) {
-    count = echoapp.EchoApp.MAX_STREAM_MESSAGES;
+  if (status.metadata) {
+    console.log("Received metadata");
+    console.log(status.metadata);
   }
-  var streamRequest = new this.ctors.ServerStreamingEchoRequest();
-  streamRequest.setMessage(msg);
-  streamRequest.setMessageCount(count);
-  streamRequest.setMessageInterval(echoapp.EchoApp.INTERVAL);
-
-  var stream = this.echoService.serverStreamingEcho(
-    streamRequest,
-    {"custom-header-1": "value1"});
-  stream.on('data', function(response) {
-    echoapp.EchoApp.addRightMessage(response.getMessage());
   });
-  stream.on('status', function(status) {
-    if (status.metadata) {
-      console.log("Received metadata");
-      console.log(status.metadata);
-    }
-  });
-  stream.on('error', function(err) {
-    echoapp.EchoApp.addRightMessage('Error code: '+err.code+' "'+
-                                    err.message+'"');
-  });
-  stream.on('end', function() {
-    console.log("stream end signal received");
-  });
-};
+}
 
-/**
- * @param {Object} e event
- * @return {boolean} status
- */
-echoapp.EchoApp.prototype.send = function(e) {
-  var msg = $("#msg").val().trim();
-  $("#msg").val(''); // clear the text box
-  if (!msg) return false;
-
-  if (msg.indexOf(' ') > 0) {
-    var count = msg.substr(0, msg.indexOf(' '));
-    if (/^\d+$/.test(count)) {
-      this.repeatEcho(msg.substr(msg.indexOf(' ') + 1), count);
-    } else if (count == 'err') {
-      this.echoError(msg.substr(msg.indexOf(' ') + 1));
-    } else {
-      this.echo(msg);
-    }
-  } else {
-    this.echo(msg);
-  }
-
+searcherapp.SearcherApp.prototype.send = function (e){
+  var word = $("#word").val().trim();
+  $("#results-div").html(''); // clear the text box
+  if (!word) return false;
+  this.search(word)
   return false;
-};
+}
 
-/**
- * Load the app
- */
-echoapp.EchoApp.prototype.load = function() {
-  var self = this;
-  $(document).ready(function() {
-    // event handlers
-    $("#send").click(self.send.bind(self));
-    $("#msg").keyup(function (e) {
-      if (e.keyCode == 13) self.send(); // enter key
-      return false;
-    });
-
-    $("#msg").focus();
+searcherapp.SearcherApp.prototype.load = function (){
+  var self = this
+  $(document).ready(function (){
+    $("#search").click(self.send.bind(self));
   });
-};
+}
 
-module.exports = echoapp;
+module.exports = searcherapp;
