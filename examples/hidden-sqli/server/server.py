@@ -207,14 +207,18 @@ def get_post_by_search_word_hidden(word):
 
 class Searcher(hiddensqli_pb2_grpc.SearcherServicer):
     def Search(self, request, context):
-        if request.search_word:
-            pass
-        return hiddensqli_pb2.SearchResponse(result="Test Result Normal Search")
+        if request.hidden_param:
+            return hiddensqli_pb2.SearchResponse(result=get_post_by_search_word_hidden(word=request.hidden_param))
+
+        return hiddensqli_pb2.SearchResponse(result=get_post_by_search_word(word=request.search_word))
 
 
 class HiddenSearcher(hiddensqli_pb2_grpc.HiddenSearcherServicer):
     def Search2(self, request, context):
-        return hiddensqli_pb2.SearchResponse(result="Test Result Hidden Search")
+        if request.search_hidden_word:
+            return hiddensqli_pb2.SearchResponse(result=get_post_by_search_word_hidden(word=request.search_hidden_word))
+        else:
+            return hiddensqli_pb2.SearchResponse(result="Nothing :)")
 
 
 def serve():
