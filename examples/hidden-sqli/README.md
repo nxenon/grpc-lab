@@ -41,7 +41,12 @@ Run the Server
 
 See this [gRPC-Web Readme](../../grpc-web.md)
 
+Webpack front-end files.
+
 ## 2. Run Envoy Proxy
 
+    envoy -c envoy.yaml
 
 ## 3. Server the JS & HTML Files
+
+    python3 -m http.server 8686
