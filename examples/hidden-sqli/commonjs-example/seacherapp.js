@@ -9,7 +9,7 @@ searcherapp.SearcherApp.INTERVAL = 500; // ms
 searcherapp.SearcherApp.MAX_STREAM_MESSAGES = 50;
 
 function result_replacer(id, title, body){
-  let html_content = "<div className=\"card\" style=\"width: 260px; border: 5px solid #adadad\">"
+  let html_content = "<div className=\"card\" style=\"width: 340px; border: 5px solid #adadad\">"
   html_content += "<div className=\"card-body\">"
   html_content += "<h5 className=\"card-title\">" + title + "</h5>"
   html_content += "<h6 className=\"card-subtitle mb-2 text-muted\"> ID: " + id + "</h6>"
