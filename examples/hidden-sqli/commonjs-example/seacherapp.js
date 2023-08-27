@@ -8,6 +8,17 @@ searcherapp.SearcherApp = function (searcherService, ctors){
 searcherapp.SearcherApp.INTERVAL = 500; // ms
 searcherapp.SearcherApp.MAX_STREAM_MESSAGES = 50;
 
+function result_replacer(id, title, body){
+  let html_content = "<div className=\"card\" style=\"width: 260px; border: 5px solid #adadad\">"
+  html_content += "<div className=\"card-body\">"
+  html_content += "<h5 className=\"card-title\">" + title + "</h5>"
+  html_content += "<h6 className=\"card-subtitle mb-2 text-muted\"> ID: " + id + "</h6>"
+  html_content += "<p className=\"card-text\">" + body + "</p>"
+  html_content += "</div></div><br>"
+
+  return html_content
+}
+
 searcherapp.SearcherApp.addResult = function (result){
   // result is stringified of json result
 
@@ -15,13 +26,12 @@ searcherapp.SearcherApp.addResult = function (result){
       json_result = JSON.parse(result)
       for (var i = 0; i < json_result.length; i++) {
         var item = json_result[i];
-
+         // "<div>" + "<p>--------------------------</p>" + "<p>id:" + item.id + "</p>"  + "<p>Title:" + item.title + "</p>"  + "<p>Body:" + item.body + "</p>" + "</div>" + "<p>--------------------------</p>"
         $("#results-div").append(
-            "<div>" + "<p>--------------------------</p>" + "<p>id:" + item.id + "</p>"  + "<p>Title:" + item.title + "</p>"  + "<p>Body:" + item.body + "</p>" + "</div>" + "<p>--------------------------</p>"
+            result_replacer(item.id, item.title, item.body)
         )
       }
     }
-
 }
 
 searcherapp.SearcherApp.addError = function (msg){
