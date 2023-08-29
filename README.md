@@ -16,6 +16,7 @@ the examples directory in this repo, has these examples:
 - [Vulnerable XSS Echo](./examples/vuln-xss-echo-client-protect): app using grpc-web which is vulnerable to xss ,but it has client protections
 - [Vulnerable XSS Multi Parameter Echo](./examples/vuln-xss-echo-client-protect-multiple-params): app using grpc-web which is vulnerable to xss ,but it has client protections and uses multiple parameters instead of one
 - [XSS Secured](./examples/xss-secure): XSS Secured --> the input gets encoded in server
+- [Hidden SQLi](./examples/hidden-sqli): gRPC-Web Lab which has 2 hidden SQLi vulnerability.
 
 # Protobuf Compiler (protoc) 
 Read [Protoc Readme](./protoc.md)
